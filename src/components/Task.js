@@ -11,7 +11,8 @@ const Task = ({ name, getTaskId }) => {
       style={{
         padding: "1rem",
         border: "1px solid #ccc",
-        margin: "1rem 1rem 0 1rem"
+        margin: "1rem 1rem 0 1rem",
+        cursor: "pointer"
       }}
       name={name}
       data-testid={taskNameToId(name)}

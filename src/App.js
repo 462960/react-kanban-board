@@ -39,27 +39,28 @@ class App extends Component {
     });
   };
 
+  movingItemHelper = (selectedTaskIndex, selectedTaskName, stage) => {
+    this.setState(prevState => ({
+      tasks: [
+        ...prevState.tasks.slice(0, selectedTaskIndex),
+        ...prevState.tasks.slice(selectedTaskIndex + 1),
+        {
+          stage,
+          name: selectedTaskName
+        }
+      ],
+      selectedTaskName: ""
+    }));
+  };
+
   moveBack = () => {
     const {
       selectedTaskIndex,
       selectedTaskStage,
       selectedTaskName
     } = this.state;
-
-    this.setState(prevState => ({
-      tasks: [
-        ...prevState.tasks.slice(0, selectedTaskIndex),
-        ...prevState.tasks.slice(selectedTaskIndex + 1),
-        Object.assign(
-          {},
-          {
-            stage: selectedTaskStage - 1,
-            name: selectedTaskName
-          }
-        )
-      ],
-      selectedTaskName: ""
-    }));
+    const stage = selectedTaskStage - 1;
+    this.movingItemHelper(selectedTaskIndex, selectedTaskName, stage);
   };
 
   moveForward = () => {
@@ -68,25 +69,14 @@ class App extends Component {
       selectedTaskStage,
       selectedTaskName
     } = this.state;
-
-    this.setState(prevState => ({
-      tasks: [
-        ...prevState.tasks.slice(0, selectedTaskIndex),
-        ...prevState.tasks.slice(selectedTaskIndex + 1),
-        Object.assign(
-          {},
-          {
-            stage: selectedTaskStage + 1,
-            name: selectedTaskName
-          }
-        )
-      ],
-      selectedTaskName: ""
-    }));
+    const stage = selectedTaskStage + 1;
+    this.movingItemHelper(selectedTaskIndex, selectedTaskName, stage);
   };
 
   render() {
-    const { tasks, selectedTaskName } = this.state;
+    const { tasks, selectedTaskName, selectedTaskIndex } = this.state;
+    const selectedTaskStage =
+      selectedTaskName && tasks[selectedTaskIndex].stage;
 
     let stagesTasks = [];
     for (let i = 0; i < NUM_STAGES; ++i) {
@@ -101,6 +91,7 @@ class App extends Component {
       <div className="App">
         <Controls
           selectedTaskName={selectedTaskName}
+          selectedTaskStage={selectedTaskStage}
           moveBack={this.moveBack}
           moveForward={this.moveForward}
         />
