@@ -1,26 +1,29 @@
-import React, { Component } from 'react';
+import React, { Component } from "react";
 
 class Controls extends Component {
   render() {
+    const { selectedTaskName } = this.props;
+    console.log(selectedTaskName);
     return (
-      <div style={{ padding: '1rem', background: '#D6F3FF' }}>
+      <div style={{ padding: "1rem", background: "#D6F3FF" }}>
         <h1>Controls</h1>
-        <div style={{ display: 'flex', marginTop: '1rem' }}>
+        <div style={{ display: "flex", marginTop: "1rem" }}>
           <input
             readOnly
             placeholder="Selected task name"
-            style={{ fontSize: '1rem' }}
+            style={{ fontSize: "1rem" }}
             data-testid="selected-task-field"
+            value={selectedTaskName}
           />
           <button
-            style={{ marginLeft: '1rem' }}
+            style={{ marginLeft: "1rem" }}
             disabled
             data-testid="move-back-btn"
           >
             Move back
           </button>
           <button
-            style={{ marginLeft: '1rem' }}
+            style={{ marginLeft: "1rem" }}
             disabled
             data-testid="move-forward-btn"
           >
@@ -28,7 +31,7 @@ class Controls extends Component {
           </button>
         </div>
       </div>
-    )
+    );
   }
 }
 
