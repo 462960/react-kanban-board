@@ -40,17 +40,49 @@ class App extends Component {
   };
 
   moveBack = () => {
-    const { selectedTaskIndex, selectedTaskStage } = this.state;
+    const {
+      selectedTaskIndex,
+      selectedTaskStage,
+      selectedTaskName
+    } = this.state;
 
     this.setState(prevState => ({
-      ...prevState.tasks,
-      [prevState.tasks[selectedTaskIndex].stage]: selectedTaskStage - 1
+      tasks: [
+        ...prevState.tasks.slice(0, selectedTaskIndex),
+        ...prevState.tasks.slice(selectedTaskIndex + 1),
+        Object.assign(
+          {},
+          {
+            stage: selectedTaskStage - 1,
+            name: selectedTaskName
+          }
+        )
+      ],
+      selectedTaskName: ""
     }));
   };
 
   moveForward = () => {
-    const { selectedTaskStage } = this.state;
-    console.log(selectedTaskStage);
+    const {
+      selectedTaskIndex,
+      selectedTaskStage,
+      selectedTaskName
+    } = this.state;
+
+    this.setState(prevState => ({
+      tasks: [
+        ...prevState.tasks.slice(0, selectedTaskIndex),
+        ...prevState.tasks.slice(selectedTaskIndex + 1),
+        Object.assign(
+          {},
+          {
+            stage: selectedTaskStage + 1,
+            name: selectedTaskName
+          }
+        )
+      ],
+      selectedTaskName: ""
+    }));
   };
 
   render() {
