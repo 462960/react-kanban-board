@@ -28,9 +28,29 @@ class App extends Component {
   }
 
   getTaskId = e => {
+    const { tasks } = this.state;
+    const name = e.target.getAttribute("name");
+    const selectedTaskIndex = tasks.findIndex(x => x.name === name);
+    const selectedTaskStage = tasks[selectedTaskIndex].stage;
     this.setState({
-      selectedTaskName: e.target.getAttribute("name")
+      selectedTaskName: name,
+      selectedTaskIndex,
+      selectedTaskStage
     });
+  };
+
+  moveBack = () => {
+    const { selectedTaskIndex, selectedTaskStage } = this.state;
+
+    this.setState(prevState => ({
+      ...prevState.tasks,
+      [prevState.tasks[selectedTaskIndex].stage]: selectedTaskStage - 1
+    }));
+  };
+
+  moveForward = () => {
+    const { selectedTaskStage } = this.state;
+    console.log(selectedTaskStage);
   };
 
   render() {
@@ -44,10 +64,14 @@ class App extends Component {
       const stageId = task.stage;
       stagesTasks[stageId].push(task);
     }
-    console.log(selectedTaskName);
+
     return (
       <div className="App">
-        <Controls selectedTaskName={selectedTaskName} />
+        <Controls
+          selectedTaskName={selectedTaskName}
+          moveBack={this.moveBack}
+          moveForward={this.moveForward}
+        />
         <Board
           stagesTasks={stagesTasks}
           stagesNames={this.stagesNames}

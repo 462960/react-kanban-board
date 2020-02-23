@@ -2,8 +2,7 @@ import React, { Component } from "react";
 
 class Controls extends Component {
   render() {
-    const { selectedTaskName } = this.props;
-    console.log(selectedTaskName);
+    const { selectedTaskName, moveBack, moveForward } = this.props;
     return (
       <div style={{ padding: "1rem", background: "#D6F3FF" }}>
         <h1>Controls</h1>
@@ -16,15 +15,17 @@ class Controls extends Component {
             value={selectedTaskName}
           />
           <button
+            onClick={moveBack}
             style={{ marginLeft: "1rem" }}
-            disabled
+            // disabled
             data-testid="move-back-btn"
           >
             Move back
           </button>
           <button
+            onClick={moveForward}
             style={{ marginLeft: "1rem" }}
-            disabled
+            // disabled
             data-testid="move-forward-btn"
           >
             Move forward
