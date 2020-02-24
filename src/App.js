@@ -39,7 +39,14 @@ class App extends Component {
     });
   };
 
-  movingItemHelper = (selectedTaskIndex, selectedTaskName, stage) => {
+  itemsMover = option => {
+    const {
+      selectedTaskIndex,
+      selectedTaskStage,
+      selectedTaskName
+    } = this.state;
+    const stage =
+      option === "back" ? selectedTaskStage - 1 : selectedTaskStage + 1;
     this.setState(prevState => ({
       tasks: [
         ...prevState.tasks.slice(0, selectedTaskIndex),
@@ -51,26 +58,6 @@ class App extends Component {
       ],
       selectedTaskName: ""
     }));
-  };
-
-  moveBack = () => {
-    const {
-      selectedTaskIndex,
-      selectedTaskStage,
-      selectedTaskName
-    } = this.state;
-    const stage = selectedTaskStage - 1;
-    this.movingItemHelper(selectedTaskIndex, selectedTaskName, stage);
-  };
-
-  moveForward = () => {
-    const {
-      selectedTaskIndex,
-      selectedTaskStage,
-      selectedTaskName
-    } = this.state;
-    const stage = selectedTaskStage + 1;
-    this.movingItemHelper(selectedTaskIndex, selectedTaskName, stage);
   };
 
   render() {
@@ -92,8 +79,7 @@ class App extends Component {
         <Controls
           selectedTaskName={selectedTaskName}
           selectedTaskStage={selectedTaskStage}
-          moveBack={this.moveBack}
-          moveForward={this.moveForward}
+          itemsMover={this.itemsMover}
         />
         <Board
           stagesTasks={stagesTasks}
